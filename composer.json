@@ -1,0 +1,53 @@
+{
+    "name": "qwerkon/code-usage",
+    "description": "Laravel telemetry package that tracks which controllers, jobs, events and commands have run.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Krzysztof Bielecki",
+            "email": "krzysztof@flexmind.pl"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "illuminate/cache": "^10.0|^11.0|^12.0",
+        "illuminate/console": "^10.0|^11.0|^12.0",
+        "illuminate/contracts": "^10.0|^11.0|^12.0",
+        "illuminate/events": "^10.0|^11.0|^12.0",
+        "illuminate/http": "^10.0|^11.0|^12.0",
+        "illuminate/log": "^10.0|^11.0|^12.0",
+        "illuminate/queue": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Qwerkon\\CodeUsage\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Qwerkon\\CodeUsage\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test:coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Qwerkon\\CodeUsage\\Providers\\CodeUsageServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
