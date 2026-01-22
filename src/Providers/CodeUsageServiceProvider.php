@@ -45,7 +45,7 @@ class CodeUsageServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton('events', function ($app) {
-            return new TrackingDispatcher($app, $app->make(CodeUsageTracker::class));
+            return new TrackingDispatcher($app);
         });
 
         $kernel = $this->app->make(Kernel::class);

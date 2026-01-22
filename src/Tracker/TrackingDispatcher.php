@@ -9,7 +9,9 @@ use Illuminate\Support\Str;
 
 class TrackingDispatcher extends Dispatcher
 {
-    public function __construct(Container $container, protected CodeUsageTracker $tracker)
+    protected ?CodeUsageTracker $tracker = null;
+
+    public function __construct(Container $container)
     {
         parent::__construct($container);
     }
@@ -19,7 +21,7 @@ class TrackingDispatcher extends Dispatcher
         $eventName = is_object($event) ? get_class($event) : $event;
 
         if (is_string($eventName)) {
-            $this->tracker->track($eventName, 'event');
+            $this->tracker()->track($eventName, 'event');
         }
 
         return parent::dispatch($event, $payload, $halt);
@@ -32,10 +34,19 @@ class TrackingDispatcher extends Dispatcher
 
         return function ($event, $payload) use ($callable, $class, $wildcard) {
             if ($class) {
-                $this->tracker->track($class, 'listener');
+                $this->tracker()->track($class, 'listener');
             }
 
             return $callable($event, $payload);
         };
+    }
+
+    protected function tracker(): CodeUsageTracker
+    {
+        if ($this->tracker === null) {
+            $this->tracker = $this->container->make(CodeUsageTracker::class);
+        }
+
+        return $this->tracker;
     }
 }
